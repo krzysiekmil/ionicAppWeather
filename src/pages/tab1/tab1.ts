@@ -19,18 +19,12 @@ export class Tab1Page {
   username = '';
   email = '';
   constructor(private navCtrl: NavController, private auth: AuthService) {
-    let info = this.auth.getUserInfo();
-    this.username = info['name'];
-    this.email = info['email'];
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Tab1Page');
   }
-  public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.navCtrl.setRoot('LoginPage')
-    });
-  }
+
 
 }

@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-import {LoginPage} from "../pages/login/login";
 import {AuthService} from "../providers/auth-service/auth-service";
 import {DataService} from '../providers/data-service/data-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
@@ -13,6 +12,7 @@ import {RegistrationServiceProvider} from "../providers/registration-service/reg
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {TOKEN_NAME} from "../providers/authentication-service/auth.constant";
 import {AuthenticationService} from "../providers/authentication-service/authentication-service";
+import {LoginPage} from "../pages/login/login";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -28,7 +28,6 @@ export function authHttpServiceFactory(http: Http) {
   declarations: [
     MyApp,
     LoginPage
-
   ],
   imports: [
     BrowserModule,
@@ -39,6 +38,7 @@ export function authHttpServiceFactory(http: Http) {
   entryComponents: [
     MyApp,
     LoginPage
+
   ],
   providers: [
     AuthService,

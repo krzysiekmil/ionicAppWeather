@@ -1,6 +1,3 @@
-import { Tab2Page } from './../tab2/tab2';
-import { Tab1Page } from './../tab1/tab1';
-import { TabsPage } from './../tabs/tabs';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav } from 'ionic-angular';
 
@@ -18,17 +15,16 @@ export interface PageInterface {
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  // Basic root for our content view
   rootPage = 'TabsPage';
-
-  // Reference to the app's root nav
   @ViewChild(Nav) nav: Nav;
 
   pages: PageInterface[] = [
-    { title: 'Tab 1', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'home' },
-    { title: 'Tab 2', pageName: 'TabsPage', tabComponent: 'Tab2Page', index: 1, icon: 'contacts' },
-    { title: 'Special', pageName: 'SpecialPage', icon: 'shuffle' },
-    { title: 'Admin', pageName: 'AdminPage',icon: 'person' },
+    { title: 'Tab 1'  , pageName: 'TabsPage'  ,tabComponent: 'Tab1Page'   ,index: 0 , icon: 'home' },
+    { title: 'Tab 2'  , pageName: 'TabsPage'  ,tabComponent: 'Tab2Page'   ,index: 1 , icon: 'contacts' },
+    { title: 'Special', pageName: 'SpecialPage' , icon: 'shuffle' },
+    { title: 'Admin'  , pageName: 'TabsPage'  ,tabComponent: 'AdminPage'  ,index: 2 , icon: 'people' },
+    { title: 'User'  , pageName: 'UserPage'  ,tabComponent: 'UserPage'  ,index: 3 , icon: 'person' },
+
   ];
 
   constructor(public navCtrl: NavController) { }
@@ -56,6 +52,7 @@ export class MenuPage {
     let childNav = this.nav.getActiveChildNav();
 
     if (childNav) {
+      childNav.getSelected()
       if (childNav.getSelected() && childNav.getSelected().root === page.tabComponent) {
         return 'primary';
       }
