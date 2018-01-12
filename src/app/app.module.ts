@@ -12,6 +12,7 @@ import {RegistrationServiceProvider} from "../providers/registration-service/reg
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {TOKEN_NAME} from "../providers/authentication-service/auth.constant";
 import {AuthenticationService} from "../providers/authentication-service/authentication-service";
+import {LoginPageModule} from "../pages/login/login.module";
 import {LoginPage} from "../pages/login/login";
 
 export function authHttpServiceFactory(http: Http) {
@@ -28,10 +29,11 @@ export function authHttpServiceFactory(http: Http) {
   declarations: [
     MyApp,
     LoginPage
+
   ],
   imports: [
-    BrowserModule,
     HttpModule,
+    BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -39,16 +41,18 @@ export function authHttpServiceFactory(http: Http) {
     MyApp,
     LoginPage
 
+
   ],
   providers: [
     AuthService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http]},
     DataService,
     AuthenticationService,
     RegistrationServiceProvider,
-    UserServiceProvider
+    UserServiceProvider,
   ]
 })
 export class AppModule {}

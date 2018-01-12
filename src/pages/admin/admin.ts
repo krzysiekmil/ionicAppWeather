@@ -46,7 +46,7 @@ export class AdminPage implements OnInit{
   deleteCity(cityName: string) {
     let index = this.cityList.findIndex(c => c.name === cityName);
     this.cityList.splice(index, 1);
-    this.dataService.deleteCity(cityName).subscribe(this.getCityList);
+    this.dataService.deleteCity(cityName).subscribe();
     this.change = true;
 
   }

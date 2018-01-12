@@ -9,8 +9,7 @@
   <ion-navbar>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-searchbar placeholder="CityFilter" (ionInput)="filterCity($event)">
-    </ion-searchbar>
+    <ion-searchbar placeholder="CityFilter" (ionInput)="filterCity($event)">    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -18,13 +17,13 @@
   <ion-list>
   <h1>Select city for you</h1>
     <ion-row></ion-row>
-    <ion-row *ngFor="let City of cityList">
+    <ion-row *ngFor="let city of cityList">
       <ion-col>
-        <ion-item>{{City.name}}</ion-item>
+        <ion-item>{{city.name}}</ion-item>
       </ion-col>
       <ion-col>
-        <button ion-button color="danger" round *ngIf="isOnList(City)" (click)="deleteCity(City.name)">Delete</button>
-        <button ion-button color="secondary" round *ngIf="!isOnList(City)" (click)="addCityToList(City.name)">Add</button>
+        <button ion-button color="danger" round *ngIf="isOnList(city)" (click)="deleteCity(city.name)">Delete</button>
+        <button ion-button color="secondary" round *ngIf="!isOnList(city)" (click)="addCityToList(city.name)">Add</button>
       </ion-col>
     </ion-row>
   </ion-list>

@@ -27,14 +27,17 @@
   </div>
     <button ion-button full round (click)="addCity(cityName.value) ; cityName.value=''">Add</button>
     <h2>City Manager</h2>
-  <table>
 
     <ion-list *ngFor="let City of cityList">
-      <td>{{City.name}}</td>
-      <td>
-        <button ion-button type="button" (click)="deleteCity(City.name)">Delete</button>
-      </td>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+      {{City.name}}
+          </ion-item>
+        </ion-col>
+        <ion-col>
+        <button ion-button color="danger" round (click)="deleteCity(City.name)">Delete</button>
+        </ion-col>
+      </ion-row>
     </ion-list>
-  </table>
-
 </ion-content>

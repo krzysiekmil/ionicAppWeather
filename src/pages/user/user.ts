@@ -1,40 +1,23 @@
 import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
-
-/**
- * Generated class for the UserPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
   selector: 'page-user',
   templateUrl: 'user.html',
 })
-export class UserPage implements OnInit,DoCheck{
-  constCityList:City[]=[];
-  cityList: City[] = [];
+export class UserPage implements OnInit{
+  cityList:City[]=[];
   userCityList: City[] = [];
-  city: City;
+  constCityList:Array<City>=[];
 
   constructor(public dataService: DataService) {
   }
-   ngDoCheck() {
-     if(this.cityList.length!=this.constCityList.length)
-     {
-     this.cityList.push(this.constCityList);
-   }
-    console.log(this.cityList);
-     console.log(this.constCityList);
-   }
 
-  ngOnInit() {
-    this.cityList=[{id:7,name:'Warszawa'},{id:8,name:'Krakow'},{id:9,name:'Lodz'}];
-    this.constCityList=[{id:7,name:'Warszawa'},{id:8,name:'Krakow'},{id:9,name:'Lodz'}];
+
+  ngOnInit(){
     this.getCityList();
     this.getUserCity();
     this.dataService.setState(true);
@@ -42,10 +25,11 @@ export class UserPage implements OnInit,DoCheck{
   }
 
   filterCity(ev:any){
+    this.cityList=this.constCityList;
     let val=ev.target.value;
     if(val&&val.trim()!==''){
-      this.cityList=this.cityList.filter(function (item) {
-        return item.name.toLowerCase().includes(val.toLowerCase());
+      this.cityList=this.cityList.filter(function (city) {
+        return city.name.toLowerCase().includes(val.toLowerCase());
       })
     }
   }
@@ -80,11 +64,12 @@ export class UserPage implements OnInit,DoCheck{
     this.dataService.getCityList().subscribe(result =>
     {
       this.cityList = result;
-      this.constCityList.concat(this.cityList);
+      this.constCityList=this.cityList;
     });
   }
 
-  isOnList(city: City): boolean {
+  isOnList(city:City): boolean {
+    console.log(city.name+this.userCityList.some(c => c.name == city.name));
     return this.userCityList.some(c => c.name == city.name);
   }
 

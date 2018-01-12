@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service/auth-service';
+import {RegistrationServiceProvider} from "../../providers/registration-service/registration-service";
 
 @IonicPage()
 @Component({
@@ -9,23 +9,26 @@ import { AuthService } from '../../providers/auth-service/auth-service';
 })
 export class RegisterPage {
   createSuccess = false;
-  registerCredentials = { email: '', password: '' };
+  registerCredentials = { name: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) { }
+  constructor(private nav: NavController, private registrationService:RegistrationServiceProvider, private alertCtrl: AlertController) { }
 
-  public register() {
-    this.auth.register(this.registerCredentials).subscribe(success => {
-        if (success) {
-          this.createSuccess = true;
-          this.showPopup("Success", "Account created.");
-        } else {
-          this.showPopup("Error", "Problem creating account.");
-        }
-      },
-      error => {
-        this.showPopup("Error", error);
-      });
-  }
+    registration(){
+      this.registrationService.registration(this.registerCredentials.name, this.registerCredentials.password)
+        .subscribe(
+          result => {
+            if (result === 200) {
+              this.showPopup("Success", "Account created.");
+            }
+            else {
+              this.showPopup("Error", "Problem creating account.");
+            }
+          },
+          error => {
+            this.showPopup("Error", "Problem with creating account.");
+          }
+        )
+    }
 
   showPopup(title, text) {
     let alert = this.alertCtrl.create({

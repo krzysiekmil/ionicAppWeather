@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {TOKEN_NAME} from "../authentication-service/auth.constant";
+import {JwtHelper} from "angular2-jwt";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -10,8 +12,36 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UserServiceProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello UserServiceProvider Provider');
+  jwtHelper: JwtHelper = new JwtHelper();
+  accessToken: string;
+  admin_role: boolean;
+  userName: string;
+
+  constructor() {
   }
+
+  login(accessTokens: string) {
+    let decodedToken = this.jwtHelper.decodeToken(accessTokens);
+    this.admin_role = decodedToken.authorities.some(role => role === 'ADMIN_USER');
+    this.accessToken = accessTokens;
+    localStorage.setItem(TOKEN_NAME, this.accessToken);
+
+  }
+
+  logout() {
+    this.accessToken = null;
+
+    localStorage.removeItem(TOKEN_NAME);
+    this.admin_role = false;
+  }
+
+  isAdmin(): boolean {
+    return this.admin_role;
+  }
+
+  isUser(): boolean {
+    return ((this.accessToken && !this.admin_role) || this.admin_role);
+  }
+
 
 }

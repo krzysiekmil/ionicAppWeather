@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from "@angular/http";
+import {Headers, Http, RequestOptions} from "@angular/http";
 import {TOKEN_AUTH_PASSWORD, TOKEN_AUTH_USERNAME} from "./auth.constant";
 
 @Injectable()
 export class AuthenticationService {
-  static AUTH_TOKEN = '/oauth/token';
+  AUTH_TOKEN = '/oauth/token';
   username: string;
 
   constructor(private http: Http) {
@@ -17,8 +17,7 @@ export class AuthenticationService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
-
-    return this.http.post(AuthenticationService.AUTH_TOKEN, body, {headers})
+    return this.http.post('localhost:8080/oauth/token', body,headers)
       .map(res => res.json())
       .map((res: any) => {
         if (res.access_token) {
