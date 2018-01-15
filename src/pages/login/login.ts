@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
-import { AuthService } from '/home/krzysiek/ionicApp/src/providers/auth-service/auth-service';
+import {Component} from '@angular/core';
+import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {AuthService} from '/home/krzysiek/ionicApp/src/providers/auth-service/auth-service';
 import {isUndefined} from "util";
 import {AuthenticationService} from "../../providers/authentication-service/authentication-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
-import {Http} from "@angular/http";
-import {HttpClient} from "@angular/common/http";
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -20,7 +19,9 @@ export class LoginPage {
   constructor(private nav: NavController, private auth: AuthService,
               private alertCtrl: AlertController, private loadingCtrl: LoadingController,
               private authenticationService:AuthenticationService,
-              private userService:UserServiceProvider) {}
+              private userService: UserServiceProvider) {
+    this.logout();
+  }
 
   public createAccount() {
     this.nav.push('RegisterPage');
@@ -47,7 +48,8 @@ export class LoginPage {
           }
         },
         error => {
-          this.showError(error.status+ " " + error.statusText);
+          this.showError("Access Denied");
+          console.log(error.status + " " + error.statusText);
         }
       )
   }
@@ -69,5 +71,9 @@ export class LoginPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  public logout() {
+    this.userService.logout();
   }
 }

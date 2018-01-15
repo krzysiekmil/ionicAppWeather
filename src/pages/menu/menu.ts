@@ -20,9 +20,9 @@ export class MenuPage {
   @ViewChild(Nav) nav: Nav;
 
   pages: PageInterface[] = [
-    { title: 'Tab 1'  , pageName: 'TabsPage'  ,tabComponent: 'Tab1Page'   ,index: 0 , icon: 'home' },
-    { title: 'Tab 2'  , pageName: 'TabsPage'  ,tabComponent: 'Tab2Page'   ,index: 1 , icon: 'contacts' },
-    { title: 'User'  , pageName: 'UserPage'  ,tabComponent: 'UserPage'  ,index: 3 , icon: 'person' },
+    {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'construct'},
+    {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab2Page', index: 1, icon: 'partly-sunny'},
+    {title: 'User', pageName: 'UserPage', tabComponent: 'UserPage', index: 2, icon: 'clipboard'},
 
   ];
 
