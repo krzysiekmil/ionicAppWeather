@@ -1,5 +1,5 @@
-import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
-import {IonicPage, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component, OnInit} from '@angular/core';
+import {IonicPage, NavController} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
@@ -14,10 +14,11 @@ export class UserPage implements OnInit{
   userCityList: City[] = [];
   constCityList:Array<City>=[];
 
-  constructor(public dataService: DataService, public userService:UserServiceProvider) {
+  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController) {
   }
+
   ionViewCanEnter():boolean{
-    return this.userService.isAdmin();
+    return this.userService.isUser();
   }
 
 

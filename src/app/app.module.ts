@@ -1,20 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { MyApp } from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {MyApp} from './app.component';
 import {AuthService} from "../providers/auth-service/auth-service";
 import {DataService} from '../providers/data-service/data-service';
-import { UserServiceProvider } from '../providers/user-service/user-service';
+import {UserServiceProvider} from '../providers/user-service/user-service';
 import {Http, HttpModule} from "@angular/http";
 import {RegistrationServiceProvider} from "../providers/registration-service/registration-service";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {TOKEN_NAME} from "../providers/authentication-service/auth.constant";
 import {AuthenticationService} from "../providers/authentication-service/authentication-service";
-import {LoginPageModule} from "../pages/login/login.module";
 import {LoginPage} from "../pages/login/login";
-import {UserPage} from "../pages/user/user";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -54,7 +52,6 @@ export function authHttpServiceFactory(http: Http) {
     AuthenticationService,
     RegistrationServiceProvider,
     UserServiceProvider,
-    UserPage
   ]
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Nav } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, Nav, NavController} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 export interface PageInterface {
@@ -25,12 +25,14 @@ export class MenuPage {
     { title: 'User'  , pageName: 'UserPage'  ,tabComponent: 'UserPage'  ,index: 3 , icon: 'person' },
 
   ];
-  ionViewCanEnter():boolean{
-    return this.userService.isUser();
-  }
+
 
   constructor(public navCtrl: NavController,public userService:UserServiceProvider) {
 
+  }
+
+  ionViewCanEnter(): boolean {
+    return this.userService.isUser();
   }
 
   isAdmin(){
