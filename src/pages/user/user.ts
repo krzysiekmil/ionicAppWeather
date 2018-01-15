@@ -2,6 +2,7 @@ import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {IonicPage, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 @IonicPage()
 @Component({
@@ -13,7 +14,10 @@ export class UserPage implements OnInit{
   userCityList: City[] = [];
   constCityList:Array<City>=[];
 
-  constructor(public dataService: DataService) {
+  constructor(public dataService: DataService, public userService:UserServiceProvider) {
+  }
+  ionViewCanEnter():boolean{
+    return this.userService.isAdmin();
   }
 
 
@@ -69,7 +73,6 @@ export class UserPage implements OnInit{
   }
 
   isOnList(city:City): boolean {
-    console.log(city.name+this.userCityList.some(c => c.name == city.name));
     return this.userCityList.some(c => c.name == city.name);
   }
 

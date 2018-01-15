@@ -14,6 +14,7 @@ import {TOKEN_NAME} from "../providers/authentication-service/auth.constant";
 import {AuthenticationService} from "../providers/authentication-service/authentication-service";
 import {LoginPageModule} from "../pages/login/login.module";
 import {LoginPage} from "../pages/login/login";
+import {UserPage} from "../pages/user/user";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -34,7 +35,7 @@ export function authHttpServiceFactory(http: Http) {
   imports: [
     HttpModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,6 +54,7 @@ export function authHttpServiceFactory(http: Http) {
     AuthenticationService,
     RegistrationServiceProvider,
     UserServiceProvider,
+    UserPage
   ]
 })
 export class AppModule {}

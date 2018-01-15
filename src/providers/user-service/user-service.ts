@@ -23,6 +23,7 @@ export class UserServiceProvider {
   login(accessTokens: string) {
     let decodedToken = this.jwtHelper.decodeToken(accessTokens);
     this.admin_role = decodedToken.authorities.some(role => role === 'ADMIN_USER');
+    this.userName= decodedToken.user_name.toString();
     this.accessToken = accessTokens;
     localStorage.setItem(TOKEN_NAME, this.accessToken);
 

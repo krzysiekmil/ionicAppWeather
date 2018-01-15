@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, Nav } from 'ionic-angular';
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 export interface PageInterface {
   title: string;
@@ -21,13 +22,20 @@ export class MenuPage {
   pages: PageInterface[] = [
     { title: 'Tab 1'  , pageName: 'TabsPage'  ,tabComponent: 'Tab1Page'   ,index: 0 , icon: 'home' },
     { title: 'Tab 2'  , pageName: 'TabsPage'  ,tabComponent: 'Tab2Page'   ,index: 1 , icon: 'contacts' },
-    { title: 'Special', pageName: 'SpecialPage' , icon: 'shuffle' },
-    { title: 'Admin'  , pageName: 'TabsPage'  ,tabComponent: 'AdminPage'  ,index: 2 , icon: 'people' },
     { title: 'User'  , pageName: 'UserPage'  ,tabComponent: 'UserPage'  ,index: 3 , icon: 'person' },
 
   ];
+  ionViewCanEnter():boolean{
+    return this.userService.isUser();
+  }
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController,public userService:UserServiceProvider) {
+
+  }
+
+  isAdmin(){
+    return this.userService.isAdmin();
+  }
 
   openPage(page: PageInterface) {
     let params = {};

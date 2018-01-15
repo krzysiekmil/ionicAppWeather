@@ -15,17 +15,17 @@
 
 <ion-content padding>
   <div class="login-box">
+  <form (ngSubmit)="addCity()" #registerForm="ngForm">
   <ion-row>
-    <ion-col>
       <ion-item>
-      <label>
-        <input ion-input placeholder="Add new City " #cityName/>
-      </label>
+        <ion-input type="text" placeholder="Add new City " name="name" [(ngModel)]="newCity.name" required></ion-input>
       </ion-item>
-    </ion-col>
   </ion-row>
+    <ion-row class ="singup-col">
+    <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" >Add City</button>
+    </ion-row>
+  </form>
   </div>
-    <button ion-button full round (click)="addCity(cityName.value) ; cityName.value=''">Add</button>
     <h2>City Manager</h2>
 
     <ion-list *ngFor="let City of cityList">

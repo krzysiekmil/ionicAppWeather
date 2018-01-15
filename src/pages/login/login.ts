@@ -47,7 +47,7 @@ export class LoginPage {
           }
         },
         error => {
-          this.showError(this.registerCredentials.name + this.registerCredentials.password);
+          this.showError(error.status+ " " + error.statusText);
         }
       )
   }

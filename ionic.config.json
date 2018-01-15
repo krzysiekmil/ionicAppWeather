@@ -4,5 +4,11 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path": "/oauth",
+      "proxyUrl": "http://localhost:8080/oauth"
+    }
+  ]
 }

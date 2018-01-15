@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import{DataService} from "../../providers/data-service/data-service";
 import {City} from "../model/city";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 /**
  * Generated class for the AdminPage page.
@@ -19,13 +20,17 @@ export class AdminPage implements OnInit{
   public cityList: City[] = [];
   public city: City = {id: null, name: null};
   public change: boolean = null;
+  newCity={name:''};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private dataService: DataService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private dataService: DataService , private userService:UserServiceProvider) {
     this.city = new City();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');
+  }
+  ionViewCanEnter():boolean{
+    return this.userService.isAdmin();
   }
 
 
@@ -34,12 +39,13 @@ export class AdminPage implements OnInit{
 
   }
 
-  addCity(cityName: string) {
-    this.dataService.addCityS(cityName).subscribe(status => {
+  addCity() {
+    this.dataService.addCityS(this.newCity.name).subscribe(status => {
       this.change = true;
       let city = new City()
-      city.name = cityName;
+      city.name = this.newCity.name;
       this.cityList.push(city);
+      this.newCity.name='';
     });
   }
 

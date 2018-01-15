@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {AuthService} from "../../providers/auth-service/auth-service";
+import {AuthenticationService} from "../../providers/authentication-service/authentication-service";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 @IonicPage()
 @Component({
@@ -16,13 +18,21 @@ export class TabsPage {
   userRoot:any    = 'UserPage';
   myIndex: number;
 
-  constructor(navParams: NavParams,public auth:AuthService,public navCtrl:NavController) {
+  constructor(navParams: NavParams,public userService:UserServiceProvider,public navCtrl:NavController) {
     // Set the active tab based on the passed index from menu.ts
     this.myIndex = navParams.data.tabIndex || 0;
   }
+  ionViewCanEnter():boolean{
+    return this.userService.isUser();
+  }
   public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.navCtrl.push('LoginPage')
-    });
+    this.userService.logout();
+      this.navCtrl.setRoot('LoginPage');
+  }
+  isAdmin(){
+    return this.userService.isAdmin();
+  }
+  isUser(){
+    return this.userService.isUser();
   }
 }

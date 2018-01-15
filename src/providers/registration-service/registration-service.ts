@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Http, RequestOptions} from "@angular/http";
+import {Http, RequestOptions,Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../../pages/model/user";
+import {HttpHeaders} from "@angular/common/http";
 
 /*
   Generated class for the RegistrationServiceProvider provider.
@@ -29,9 +29,10 @@ export class RegistrationServiceProvider {
 
   registration(username: string, password: string): Observable<number> {
     let header = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: header});
     let body = new User();
     body.username = username;
     body.password = password;
-    return this.http.post(this.addUrl, body, header).map(res => res.status).catch(this.handleError);
+    return this.http.post(this.addUrl, body, options).map(res => res.status).catch(this.handleError);
   }
 }
