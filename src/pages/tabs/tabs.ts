@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {AuthService} from "../../providers/auth-service/auth-service";
-import {AuthenticationService} from "../../providers/authentication-service/authentication-service";
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 @IonicPage()
@@ -20,7 +18,7 @@ export class TabsPage {
 
   constructor(navParams: NavParams,public userService:UserServiceProvider,public navCtrl:NavController) {
     // Set the active tab based on the passed index from menu.ts
-    this.myIndex = navParams.data.tabIndex || 0;
+    this.myIndex = navParams.data.tabIndex || 2;
   }
   ionViewCanEnter():boolean{
     return this.userService.isUser();

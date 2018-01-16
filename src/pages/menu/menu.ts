@@ -1,6 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonicPage, Nav, NavController} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {City} from "../model/city";
+import {DataService} from "../../providers/data-service/data-service";
+import {Tab1Page} from "../tab1/tab1";
 
 export interface PageInterface {
   title: string;
@@ -8,6 +11,7 @@ export interface PageInterface {
   tabComponent?: any;
   index?: number;
   icon: string;
+  param?: string;
 }
 
 @IonicPage()
@@ -15,7 +19,8 @@ export interface PageInterface {
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
-export class MenuPage {
+export class MenuPage implements OnInit {
+  public userCityList: City[] = [];
   rootPage = 'TabsPage';
   @ViewChild(Nav) nav: Nav;
 
@@ -24,11 +29,30 @@ export class MenuPage {
     {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab2Page', index: 1, icon: 'partly-sunny'},
     {title: 'User', pageName: 'UserPage', tabComponent: 'UserPage', index: 2, icon: 'clipboard'},
 
+
   ];
 
 
-  constructor(public navCtrl: NavController,public userService:UserServiceProvider) {
+  constructor(public navCtrl: NavController, public userService: UserServiceProvider, private dataService: DataService) {
+  }
 
+  ngOnInit() {
+    this.getUserCityList();
+  }
+
+  getUserCityList() {
+    this.dataService.getCityListForUser().subscribe(result => {
+      this.userCityList = result;
+      this.userCityList.forEach(city => {
+        this.pages.push({
+          title: city.name,
+          pageName: 'TabsPage',
+          tabComponent: 'Tab1Page',
+          icon: null,
+          param: city.name
+        })
+      });
+    });
   }
 
   ionViewCanEnter(): boolean {

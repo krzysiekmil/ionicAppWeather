@@ -13,6 +13,7 @@ import {AuthConfig, AuthHttp} from "angular2-jwt";
 import {TOKEN_NAME} from "../providers/authentication-service/auth.constant";
 import {AuthenticationService} from "../providers/authentication-service/authentication-service";
 import {LoginPage} from "../pages/login/login";
+import {ChartsModule} from "ng2-charts";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -33,12 +34,14 @@ export function authHttpServiceFactory(http: Http) {
   imports: [
     HttpModule,
     BrowserModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage
+    LoginPage,
+
 
 
   ],
