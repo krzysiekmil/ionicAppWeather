@@ -75,8 +75,7 @@ export class Tab1Page implements DoCheck, OnInit {
 
   ngOnInit() {
     this.name = 'Warszawa';
-
-    console.log(this.name)
+    console.log(navParams)
     this.getCityData(this.name);
   }
 
