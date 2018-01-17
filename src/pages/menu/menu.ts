@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, OnInit, ViewChild} from '@angular/core';
 import {IonicPage, Nav, NavController} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {City} from "../model/city";
@@ -19,7 +19,7 @@ export interface PageInterface {
   selector: 'page-menu',
   templateUrl: 'menu.html',
 })
-export class MenuPage implements OnInit {
+export class MenuPage implements OnInit, DoCheck {
   public userCityList: City[] = [];
   rootPage = 'TabsPage';
   @ViewChild(Nav) nav: Nav;
@@ -39,6 +39,19 @@ export class MenuPage implements OnInit {
 
   ngOnInit() {
     this.getUserCityList();
+  }
+
+  ngDoCheck() {
+    if (this.dataService.getState() == true) {
+      this.pages = [
+        {title: 'CityList', pageName: 'TabsPage', tabComponent: 'UserPage', index: 1, icon: 'clipboard'},
+        {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
+        {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
+        {title: 'Test', pageName: 'SpecialPage', icon: null}
+      ];
+      this.getUserCityList();
+      this.dataService.setState(false);
+    }
   }
 
   getUserCityList() {

@@ -89,7 +89,6 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
 
     this.width = window.screen.width * 0.95;
     this.height = screen.availHeight * 0.7;
-    this.lineChartData = this.lineChartData.slice();
 
   }
 
