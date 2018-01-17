@@ -30,6 +30,7 @@ export class Tab2Page implements OnInit {
 
   loadMap() {
 
+
     let latLng = new google.maps.LatLng(-34.9290, 138.6010);
 
     let mapOptions = {
