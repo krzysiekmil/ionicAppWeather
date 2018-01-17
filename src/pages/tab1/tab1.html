@@ -1,19 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Tab1</ion-title>
+    <ion-buttons>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+        <ion-title>{{test}}</ion-title>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item>{{test}}&&&
         {{name}}
         temp: {{tempLast}}
         time: {{timeLast}}
       </ion-item>
     </ion-col>
     <ion-col>
-      <button ion-button color="secondary" round (click)="refresh()">Refresh</button>
+      <button ion-button round (click)="refresh()">Refresh</button>
     </ion-col>
   </ion-row>
   <div class="row">

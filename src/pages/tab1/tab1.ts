@@ -1,5 +1,5 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
-import {IonicPage, Loading, LoadingController, NavParams} from 'ionic-angular';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {DataService} from "../../providers/data-service/data-service";
 import {CityData} from "../model/cityData";
 import {City} from "../model/city";
@@ -16,7 +16,7 @@ import {City} from "../model/city";
   selector: 'page-tab1',
   templateUrl: 'tab1.html',
 })
-export class Tab1Page implements DoCheck, OnInit {
+export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   cityList: City[];
   public cityData: CityData;
   public currentCityData: CityData[];
@@ -33,7 +33,14 @@ export class Tab1Page implements DoCheck, OnInit {
   loading: Loading;
 
 
-  public constructor(private dataService: DataService, private loadingCtrl: LoadingController, navParams: NavParams) {
+  public constructor(private dataService: DataService, private loadingCtrl: LoadingController, public navParams: NavParams, public navCtrl: NavController) {
+    this.test = navParams.data.tabParam;
+    console.log("tabParam")
+    console.log(this.test);
+    console.log("this.navParams.data.tabTitle ");
+    console.log(navParams.data.tabTitle);
+    console.log("this.navParams.data.tabIndex con");
+    console.log(navParams.data.tabIndex);
   }
 
   public lineChartOptions: any = {
@@ -72,26 +79,23 @@ export class Tab1Page implements DoCheck, OnInit {
   public width: number;
   public height: number;
   public lineChartType = 'line';
+  public test: string = '';
 
   ngOnInit() {
-    this.name = 'Warszawa';
-    console.log(navParams)
-    this.getCityData(this.name);
+    this.getCityData(this.navParams.data.tabParam);
   }
 
   ngDoCheck() {
+
     this.width = window.screen.width * 0.95;
     this.height = screen.availHeight * 0.7;
     this.lineChartData = this.lineChartData.slice();
-    if (this.name != this.nameLast) {
-      this.nameLast = this.name;
-      this.getCityData(this.name);
-    }
+
   }
 
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   public getCity() {
@@ -139,7 +143,7 @@ export class Tab1Page implements DoCheck, OnInit {
     this.showLoading();
     this.dataService.refreshData().subscribe(successCode => {
       if (successCode === 200) {
-        this.getCityData(this.name);
+        this.getCityData(this.navParams.data.tabParam);
       }
       this.loading.dismissAll();
     });

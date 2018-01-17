@@ -25,9 +25,10 @@ export class MenuPage implements OnInit {
   @ViewChild(Nav) nav: Nav;
 
   pages: PageInterface[] = [
-    {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'construct'},
-    {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab2Page', index: 1, icon: 'partly-sunny'},
-    {title: 'User', pageName: 'UserPage', tabComponent: 'UserPage', index: 2, icon: 'clipboard'},
+    {title: 'User', pageName: 'TabsPage', tabComponent: 'UserPage', index: 1, icon: 'clipboard'},
+    {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
+    {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
+    {title: 'Test', pageName: 'SpecialPage', icon: null}
 
 
   ];
@@ -46,10 +47,10 @@ export class MenuPage implements OnInit {
       this.userCityList.forEach(city => {
         this.pages.push({
           title: city.name,
-          pageName: 'TabsPage',
+          pageName: 'Tab1Page',
           tabComponent: 'Tab1Page',
           icon: null,
-          param: city.name
+          param: city.name,
         })
       });
     });
@@ -68,7 +69,15 @@ export class MenuPage implements OnInit {
 
     // The index is equal to the order of our tabs inside tabs.ts
     if (page.index) {
-      params = { tabIndex: page.index };
+      console.log(this.pages.forEach(page => {
+        console.log(page.param)
+      }));
+      params = {tabIndex: page.index, tabParam: page.param};
+      console.log(params);
+    }
+    else {
+      params = {tabParam: page.param};
+      console.log(params);
     }
 
     // The active child nav is our Tabs Navigation
@@ -79,6 +88,7 @@ export class MenuPage implements OnInit {
       // In this case: moving to or from SpecialPage
       this.nav.setRoot(page.pageName, params);
     }
+
   }
 
   isActive(page: PageInterface) {
@@ -94,7 +104,7 @@ export class MenuPage implements OnInit {
     }
 
     // Fallback needed when there is no active childnav (tabs not active)
-    if (this.nav.getActive() && this.nav.getActive().name === page.pageName) {
+    if (this.nav.getActive() && this.nav.getActive().name === page.title) {
       return 'primary';
     }
     return;
