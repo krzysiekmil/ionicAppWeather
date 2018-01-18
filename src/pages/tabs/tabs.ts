@@ -26,7 +26,7 @@ export class TabsPage {
   public logout() {
     this.userService.logout();
 
-    this.navCtrl.setRoot('LoginPage');
+    this.navCtrl.pop();
   }
   isAdmin(){
     return this.userService.isAdmin();
