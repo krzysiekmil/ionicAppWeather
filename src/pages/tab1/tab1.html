@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header xmlns:display="http://www.w3.org/1999/xhtml" xmlns:display="http://www.w3.org/1999/xhtml">
   <ion-navbar>
     <ion-buttons>
       <button ion-button menuToggle>
@@ -8,24 +8,24 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-row>
     <ion-col>
-      <ion-item>{{test}}&&&
+      <ion-item id="data">
         temp: {{tempLast}}
         time: {{timeLast}}
       </ion-item>
     </ion-col>
     <ion-col>
-      <button ion-button round (click)="refresh()">Refresh</button>
+      <button id="button_refresh" ion-button round (click)="refresh()">Refresh</button>
+    </ion-col>
+    <ion-col>
     </ion-col>
   </ion-row>
   <div class="row">
     <div class="col-md-6">
-      <div>
-        <canvas baseChart
-                [width]="width"
-                height="125"
+      <div style="display: block">
+        <canvas id="chart_canvas" baseChart
                 [data]="lineChartData"
                 [labels]="lineChartLabels"
                 [options]="lineChartOptions"
@@ -37,4 +37,5 @@
       </div>
     </div>
   </div>
+  <div #map id="map"></div>
 </ion-content>

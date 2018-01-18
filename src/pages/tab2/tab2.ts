@@ -1,12 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
 
-/**
- * Generated class for the Tab2Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+declare var google;
 
 @IonicPage()
 @Component({
@@ -15,31 +11,101 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 })
 export class Tab2Page implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
-  map: any;
+  loading: Loading;
+  map: google.maps.Map;
+  start = 'chicago, il';
+  end = 'chicago, il';
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  geocoder: google.maps.Geocoder;
+  lat: number = 0;
+  lng: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
 
   ngOnInit() {
-    this.loadMap();
+    this.showLoading();
+    this.geocoder = new google.maps.Geocoder();
+    this.geocoder.geocode({'address': 'polska'}, (results, status) => {
+      if (status === 'OK') {
+        this.lng = results[0].geometry.location.lng();
+        this.lat = results[0].geometry.location.lat();
+        this.initMap();
+      }
+      else {
+        this.showError("CHYBA SIE DUPLO");
+      }
+    })
   }
 
-  ionViewDidLoad() {
-    // this.loadMap();
+
+  initMap() {
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 4,
+      center: {lat: this.lat, lng: this.lng}
+    });
+    this.loading.dismissAll();
+    this.directionsDisplay.setMap(this.map);
   }
 
-  loadMap() {
+  addMarker() {
+
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+
+    let content = "<h4>Information!</h4>";
+
+    // this.addInfoWindow(marker, content);
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
+
+  }
 
 
-    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+  calculateAndDisplayRoute() {
+    this.showLoading();
+    this.directionsService.route({
+      origin: this.start,
+      destination: this.end,
+      travelMode: 'DRIVING'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.loading.dismissAll();
+        this.directionsDisplay.setDirections(response);
+      } else {
+        this.showError(status);
+      }
+    });
+  }
 
-    let mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+  showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    });
+    this.loading.present();
+  }
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  showError(text) {
+    this.loading.dismiss();
+
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }

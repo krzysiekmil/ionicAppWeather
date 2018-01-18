@@ -1,5 +1,5 @@
-import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
-import {IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AlertController, IonicPage, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {DataService} from "../../providers/data-service/data-service";
 import {CityData} from "../model/cityData";
 import {City} from "../model/city";
@@ -11,14 +11,26 @@ import {City} from "../model/city";
  * Ionic pages and navigation.
  */
 
+declare var google;
+
 @IonicPage()
 @Component({
   selector: 'page-tab1',
   templateUrl: 'tab1.html',
 })
 export class Tab1Page implements DoCheck, OnInit, OnDestroy {
-  cityList: City[];
+  @ViewChild('map') mapElement: ElementRef;
+  loading: Loading;
+  map: google.maps.Map;
+  start = 'chicago, il';
+  end = 'chicago, il';
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+  geocoder = new google.maps.Geocoder;
+  lat: number = 0;
+  lng: number = 0;
   public cityData: CityData;
+  cityList: City[];
   public currentCityData: CityData[];
   public lineChartData: any[] = [];
   public lineChartLabels: Array<any> = [];
@@ -30,23 +42,9 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   public tempLast: any;
   public timeLast: any;
   public status: number;
-  loading: Loading;
-
-
-  public constructor(private dataService: DataService, private loadingCtrl: LoadingController, public navParams: NavParams, public navCtrl: NavController) {
-    this.test = navParams.data.tabParam;
-    console.log("tabParam")
-    console.log(this.test);
-    console.log("this.navParams.data.tabTitle ");
-    console.log(navParams.data.tabTitle);
-    console.log("this.navParams.data.tabIndex con");
-    console.log(navParams.data.tabIndex);
-  }
-
   public lineChartOptions: any = {
     responsive: true
   };
-
   public lineChartColors: Array<any> = [
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
@@ -74,21 +72,60 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }
   ];
-
   public lineChartLegend = true;
   public width: number;
   public height: number;
   public lineChartType = 'line';
-  public test: string = '';
+  public test: string;
+
+  public constructor(private dataService: DataService, private loadingCtrl: LoadingController, public navParams: NavParams, public navCtrl: NavController, private alertCtrl: AlertController) {
+  }
 
   ngOnInit() {
-    this.getCityData(this.navParams.data.tabParam);
+    this.test = this.navParams.data.tabParam;
+    this.showLoading();
+    console.log(this.lng + "x" + this.lat);
+    this.geocoder = new google.maps.Geocoder();
+    this.geocoder.geocode({'address': this.test}, (results, status) => {
+      if (status === 'OK') {
+        this.lng = results[0].geometry.location.lng();
+        this.lat = results[0].geometry.location.lat();
+        console.log(this.lng + "x" + this.lat);
+        this.initMap();
+      }
+      else {
+        this.showError("CHYBA SIE DUPLO");
+      }
+      this.getCityData(this.test);
+    })
+  }
+
+  showError(text) {
+    this.loading.dismissAll();
+
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  initMap() {
+    console.log(this.lng + "x" + this.lat);
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      zoom: 8,
+      center: {lat: this.lat, lng: this.lng}
+    });
+    console.log(this.lng + "x" + this.lat);
+    // this.loading.dismissAll();
+    this.directionsDisplay.setMap(this.map);
   }
 
   ngDoCheck() {
 
-    this.width = window.screen.width * 0.95;
-    this.height = screen.availHeight * 0.7;
+    this.width = window.screen.width;
+    this.height = window.screen.height;
 
   }
 
@@ -142,7 +179,7 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
     this.showLoading();
     this.dataService.refreshData().subscribe(successCode => {
       if (successCode === 200) {
-        this.getCityData(this.navParams.data.tabParam);
+        this.getCityData(this.test);
       }
       this.loading.dismissAll();
     });
@@ -155,6 +192,7 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
     });
     this.loading.present();
   }
+
 }
 
 

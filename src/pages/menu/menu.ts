@@ -82,15 +82,10 @@ export class MenuPage implements OnInit, DoCheck {
 
     // The index is equal to the order of our tabs inside tabs.ts
     if (page.index) {
-      console.log(this.pages.forEach(page => {
-        console.log(page.param)
-      }));
       params = {tabIndex: page.index, tabParam: page.param};
-      console.log(params);
     }
     else {
       params = {tabParam: page.param};
-      console.log(params);
     }
 
     // The active child nav is our Tabs Navigation

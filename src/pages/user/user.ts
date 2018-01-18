@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {Geolocation} from '@ionic-native/geolocation';
+
+declare var google;
 
 @IonicPage()
 @Component({
@@ -13,8 +16,13 @@ export class UserPage implements OnInit{
   cityList:City[]=[];
   userCityList: City[] = [];
   constCityList:Array<City>=[];
+  lng: any;
+  lat: any;
+  loading: Loading;
+  currentCity: any;
 
-  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController) {
+
+  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController) {
   }
 
   ionViewCanEnter():boolean{
@@ -26,6 +34,7 @@ export class UserPage implements OnInit{
     this.getCityList();
     this.getUserCity();
     this.dataService.setState(true);
+    this.myLocation();
 
   }
 
@@ -75,6 +84,50 @@ export class UserPage implements OnInit{
 
   isOnList(city:City): boolean {
     return this.userCityList.some(c => c.name == city.name);
+  }
+
+  myLocation() {
+    let geocoder = new google.maps.Geocoder();
+    this.showLoading();
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.lng = resp.coords.longitude;
+      this.lat = resp.coords.latitude;
+      geocoder.geocode({'location': {lat: this.lat, lng: this.lng}}, (results, status) => {
+        if (status === 'OK') {
+          this.currentCity = results[0].formatted_address;
+          console.log(results[0].address_components);
+          this.loading.dismissAll();
+        }
+      })
+    }).catch(error => {
+      this.loading.dismissAll();
+      this.showError(error);
+    });
+  }
+
+  showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    });
+    this.loading.present();
+  }
+
+  showError(text) {
+    this.loading.dismissAll();
+
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  restart() {
+    this.lat = null;
+    this.lng = null;
+    this.currentCity = null;
   }
 
 }
