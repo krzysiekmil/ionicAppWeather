@@ -15,6 +15,7 @@ import {AuthenticationService} from "../providers/authentication-service/authent
 import {ChartsModule} from "ng2-charts";
 import {LoginPageModule} from "../pages/login/login.module";
 import {Geolocation} from "@ionic-native/geolocation";
+import {Push} from "@ionic-native/push";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -55,7 +56,8 @@ export function authHttpServiceFactory(http: Http) {
     AuthenticationService,
     RegistrationServiceProvider,
     UserServiceProvider,
-    Geolocation
+    Geolocation,
+    Push
   ]
 })
 export class AppModule {}

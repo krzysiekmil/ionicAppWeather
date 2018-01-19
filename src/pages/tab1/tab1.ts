@@ -3,6 +3,7 @@ import {AlertController, IonicPage, Loading, LoadingController, NavController, N
 import {DataService} from "../../providers/data-service/data-service";
 import {CityData} from "../model/cityData";
 import {City} from "../model/city";
+import {isNullOrUndefined} from "util";
 
 /**
  * Generated class for the Tab1Page page.
@@ -81,16 +82,18 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   public constructor(private dataService: DataService, private loadingCtrl: LoadingController, public navParams: NavParams, public navCtrl: NavController, private alertCtrl: AlertController) {
   }
 
+  ionViewCanEnter(): boolean {
+    return !isNullOrUndefined(this.navParams.data.tabParam);
+  }
+
   ngOnInit() {
     this.test = this.navParams.data.tabParam;
     this.showLoading();
-    console.log(this.lng + "x" + this.lat);
     this.geocoder = new google.maps.Geocoder();
     this.geocoder.geocode({'address': this.test}, (results, status) => {
       if (status === 'OK') {
         this.lng = results[0].geometry.location.lng();
         this.lat = results[0].geometry.location.lat();
-        console.log(this.lng + "x" + this.lat);
         this.initMap();
       }
       else {
@@ -112,13 +115,10 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   }
 
   initMap() {
-    console.log(this.lng + "x" + this.lat);
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 8,
       center: {lat: this.lat, lng: this.lng}
     });
-    console.log(this.lng + "x" + this.lat);
-    // this.loading.dismissAll();
     this.directionsDisplay.setMap(this.map);
   }
 

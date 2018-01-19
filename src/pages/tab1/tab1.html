@@ -17,7 +17,7 @@
       </ion-item>
     </ion-col>
     <ion-col>
-      <button id="button_refresh" ion-button round (click)="refresh()">Refresh</button>
+      <button id="button_refresh" ion-button end round (click)="refresh()">Refresh</button>
     </ion-col>
     <ion-col>
     </ion-col>
@@ -25,7 +25,9 @@
   <div class="row">
     <div class="col-md-6">
       <div style="display: block">
-        <canvas id="chart_canvas" baseChart
+        <canvas id="chart" baseChart
+                height="360"
+                width="1400"
                 [data]="lineChartData"
                 [labels]="lineChartLabels"
                 [options]="lineChartOptions"

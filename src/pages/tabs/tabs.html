@@ -15,6 +15,6 @@
 
 <ion-tabs  [selectedIndex]="myIndex">
   <ion-tab [root]="tab2Root" tabTitle="Settings" tabIcon="construct"></ion-tab>
-  <ion-tab [root]="userRoot" tabTitle="CityList" tabIcon="clipboard"></ion-tab>
+  <ion-tab *ngIf="this.test.ionViewCanEnter()" [root]="userRoot" tabTitle="CityList" tabIcon="clipboard"></ion-tab>
   <ion-tab *ngIf="isAdmin()" [root]="adminRoot" tabTitle="Admin" tabIcon="people"></ion-tab>
 </ion-tabs>

@@ -44,7 +44,8 @@ export class LoginPage {
           }
           else
           {
-            this.showError("Access Denied")
+
+            this.showError("Access Denied s")
           }
         },
         error => {
@@ -64,7 +65,6 @@ export class LoginPage {
 
   showError(text) {
     this.loading.dismiss();
-
     let alert = this.alertCtrl.create({
       title: 'Fail',
       subTitle: text,

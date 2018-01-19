@@ -1,9 +1,11 @@
 import {Component, DoCheck, OnInit, ViewChild} from '@angular/core';
-import {IonicPage, Nav, NavController} from 'ionic-angular';
+import {IonicPage, Nav, NavController, NavParams} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
 import {Tab1Page} from "../tab1/tab1";
+import {UserPage} from "../user/user";
+import {Tab2Page} from "../tab2/tab2";
 
 export interface PageInterface {
   title: string;
@@ -12,6 +14,7 @@ export interface PageInterface {
   index?: number;
   icon: string;
   param?: string;
+  component?: any;
 }
 
 @IonicPage()
@@ -23,32 +26,35 @@ export class MenuPage implements OnInit, DoCheck {
   public userCityList: City[] = [];
   rootPage = 'TabsPage';
   @ViewChild(Nav) nav: Nav;
-
-  pages: PageInterface[] = [
-    {title: 'User', pageName: 'TabsPage', tabComponent: 'UserPage', index: 1, icon: 'clipboard'},
-    {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
-    {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
-    {title: 'Test', pageName: 'SpecialPage', icon: null}
+  pages: PageInterface[];
 
 
-  ];
+  constructor(private navParam: NavParams, public navCtrl: NavController, public userService: UserServiceProvider, private dataService: DataService, private tab2Page: Tab2Page, private userPage: UserPage) {
+  }
 
-
-  constructor(public navCtrl: NavController, public userService: UserServiceProvider, private dataService: DataService) {
+  initPageList() {
+    this.pages = [
+      {
+        title: 'User',
+        pageName: 'TabsPage',
+        tabComponent: 'UserPage',
+        index: 1,
+        icon: 'clipboard',
+        component: this.userPage
+      },
+      {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct', component: this.tab2Page},
+      {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
+    ];
   }
 
   ngOnInit() {
+    this.initPageList();
     this.getUserCityList();
   }
 
   ngDoCheck() {
     if (this.dataService.getState() == true) {
-      this.pages = [
-        {title: 'CityList', pageName: 'TabsPage', tabComponent: 'UserPage', index: 1, icon: 'clipboard'},
-        {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
-        {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
-        {title: 'Test', pageName: 'SpecialPage', icon: null}
-      ];
+      this.initPageList();
       this.getUserCityList();
       this.dataService.setState(false);
     }

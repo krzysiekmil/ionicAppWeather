@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {Push} from '@ionic-native/push';
 
 
 declare var google;
@@ -22,7 +23,23 @@ export class Tab2Page implements OnInit {
   lng: number = 0;
 
 
-  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push) {
+    push.hasPermission()
+      .then((res: any) => {
+
+        if (res.isEnabled) {
+          console.log('We have permission to send push notifications');
+        } else {
+          console.log('We do not have permission to send push notifications');
+        }
+
+      }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  ionViewCanEnter(): boolean {
+    return true;
   }
 
   ngOnInit() {
@@ -37,6 +54,7 @@ export class Tab2Page implements OnInit {
       else {
         this.showError("CHYBA SIE DUPLO");
       }
+      this.loading.dismissAll();
     })
   }
 
@@ -46,7 +64,6 @@ export class Tab2Page implements OnInit {
       zoom: 4,
       center: {lat: this.lat, lng: this.lng}
     });
-    this.loading.dismissAll();
     this.directionsDisplay.setMap(this.map);
   }
 

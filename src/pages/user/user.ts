@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {Geolocation} from '@ionic-native/geolocation';
+import {isNullOrUndefined} from "util";
 
 declare var google;
 
@@ -22,12 +23,17 @@ export class UserPage implements OnInit{
   currentCity: any;
 
 
-  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController) {
+  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
 
   ionViewCanEnter():boolean{
-    return this.userService.isUser();
+    let result = this.userService.isUser();
+    if (!isNullOrUndefined(result))
+      return result;//result;
+    else
+      return false;
   }
+
 
 
   ngOnInit(){
@@ -96,8 +102,8 @@ export class UserPage implements OnInit{
         if (status === 'OK') {
           this.currentCity = results[0].formatted_address;
           console.log(results[0].address_components);
-          this.loading.dismissAll();
         }
+        this.loading.dismissAll();
       })
     }).catch(error => {
       this.loading.dismissAll();
