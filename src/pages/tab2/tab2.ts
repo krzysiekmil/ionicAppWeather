@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
 import {Push} from '@ionic-native/push';
+import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 
 declare var google;
@@ -23,19 +25,21 @@ export class Tab2Page implements OnInit {
   lng: number = 0;
 
 
-  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push) {
-    push.hasPermission()
-      .then((res: any) => {
+  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push, private localNotification: PhonegapLocalNotification, private userService: UserServiceProvider) {
+    this.localNotification.requestPermission().then(
+      (permission) => {
+        if (permission === 'granted') {
 
-        if (res.isEnabled) {
-          console.log('We have permission to send push notifications');
-        } else {
-          console.log('We do not have permission to send push notifications');
+          // Create the notification
+          this.localNotification.create('I AM WORKING', {
+            tag: 'message1',
+            body: 'Welcome:',
+            icon: 'assets/icon/favicon.ico'
+          });
+
         }
-
-      }).catch(error => {
-      console.log(error);
-    });
+      })
+      .catch(error => console.log("Error : " + error));
   }
 
   ionViewCanEnter(): boolean {
@@ -46,7 +50,7 @@ export class Tab2Page implements OnInit {
     this.showLoading();
     this.geocoder = new google.maps.Geocoder();
     this.geocoder.geocode({'address': 'polska'}, (results, status) => {
-      if (status === 'OK') {
+      if (status.toString() === 'OK') {
         this.lng = results[0].geometry.location.lng();
         this.lat = results[0].geometry.location.lat();
         this.initMap();

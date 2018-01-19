@@ -16,6 +16,7 @@ import {ChartsModule} from "ng2-charts";
 import {LoginPageModule} from "../pages/login/login.module";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Push} from "@ionic-native/push";
+import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -57,7 +58,8 @@ export function authHttpServiceFactory(http: Http) {
     RegistrationServiceProvider,
     UserServiceProvider,
     Geolocation,
-    Push
+    Push,
+    PhonegapLocalNotification
   ]
 })
 export class AppModule {}
