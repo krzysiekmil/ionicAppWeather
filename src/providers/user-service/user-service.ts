@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TOKEN_NAME} from "../authentication-service/auth.constant";
 import {JwtHelper} from "angular2-jwt";
+import {isNullOrUndefined} from "util";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -17,12 +18,15 @@ export class UserServiceProvider {
   userName: string;
 
   constructor() {
+    let token = localStorage.getItem(TOKEN_NAME);
+    if (!isNullOrUndefined(token)) {
+      this.userName = this.jwtHelper.decodeToken(token).user_name;
+    }
   }
 
   login(accessTokens: string) {
     let decodedToken = this.jwtHelper.decodeToken(accessTokens);
     this.admin_role = decodedToken.authorities.some(role => role === 'ADMIN_USER');
-    console.log(decodedToken.user_name);
     this.userName= decodedToken.user_name.toString();
     this.accessToken = accessTokens;
     localStorage.setItem(TOKEN_NAME, this.accessToken);

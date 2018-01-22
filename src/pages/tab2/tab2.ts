@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {AlertController, App, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
 import {Push} from '@ionic-native/push';
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {DataService} from "../../providers/data-service/data-service";
 
 
 declare var google;
@@ -23,27 +24,45 @@ export class Tab2Page implements OnInit {
   geocoder: google.maps.Geocoder;
   lat: number = 0;
   lng: number = 0;
+  userName: string;
 
 
-  constructor(public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push, private localNotification: PhonegapLocalNotification, private userService: UserServiceProvider) {
-    this.localNotification.requestPermission().then(
-      (permission) => {
-        if (permission === 'granted') {
+  constructor(private app: App, public dataService: DataService, public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push, private localNotification: PhonegapLocalNotification, private userService: UserServiceProvider) {
+    if (!this.userService.userName) {
+      this.presentNotification('WOW', 'please try to login again ');
+    }
+    else {
+      this.presentNotification('Welcome ', this.userService.userName);
+    }
 
-          // Create the notification
-          this.localNotification.create('I AM WORKING', {
-            tag: 'message1',
-            body: 'Welcome:',
-            icon: 'assets/icon/favicon.ico'
-          });
-
-        }
-      })
-      .catch(error => console.log("Error : " + error));
   }
 
   ionViewCanEnter(): boolean {
-    return true;
+    if (!this.userService.userName) {
+      let allert = this.alertCtrl.create({
+        title: 'Upsss ...',
+        message: 'Can not find your access token,\' please try again',
+
+        buttons: [
+          {
+            text: 'LogIn',
+            handler: () => {
+              this.logout();
+            }
+          },
+        ]
+      });
+      allert.present();
+    }
+    else {
+      return true;
+    }
+  }
+
+  public logout() {
+    this.userService.logout();
+
+    this.app.getRootNav().setRoot('LoginPage');
   }
 
   ngOnInit() {
@@ -60,7 +79,34 @@ export class Tab2Page implements OnInit {
       }
       this.loading.dismissAll();
     })
+    this.checkControl();
   }
+
+  presentNotification(title: string, text: string) {
+    this.localNotification.requestPermission().then(
+      (permission) => {
+        if (permission === 'granted') {
+
+          this.localNotification.create(title, {
+            tag: 'message2',
+            body: text,
+            icon: 'assets/icon/favicon.ico'
+          });
+
+        }
+      })
+      .catch(error => console.log("Error : " + error));
+  }
+
+  checkControl() {
+    this.dataService.getCityList().subscribe(result => {
+      let data = result.length.toString()
+      if (localStorage.getItem('numberOfCites') != data)
+        this.presentNotification('WOW', 'NEW CITY AVAILABLE');
+      localStorage.setItem('numberOfCities', data);
+    });
+  }
+
 
 
   initMap() {

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {AlertController, IonicPage, Loading, LoadingController, NavController, ToastController} from 'ionic-angular';
 import {City} from "../model/city";
 import {DataService} from "../../providers/data-service/data-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {Geolocation} from '@ionic-native/geolocation';
 import {isNullOrUndefined} from "util";
+
 
 declare var google;
 
@@ -23,7 +24,7 @@ export class UserPage implements OnInit{
   currentCity: any;
 
 
-  constructor(public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+  constructor(public toastCtrl: ToastController, public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
 
   ionViewCanEnter():boolean{
@@ -32,6 +33,16 @@ export class UserPage implements OnInit{
       return result;//result;
     else
       return false;
+  }
+
+  presentToast(text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 1800,
+      position: 'top',
+
+    });
+    toast.present();
   }
 
 
@@ -62,6 +73,10 @@ export class UserPage implements OnInit{
         city.name = cityName;
         this.userCityList.push(city);
         this.dataService.setState(true);
+        this.presentToast('Add successful')
+      }
+      else {
+        this.presentToast('Upsss ... ')
       }
     });
   }
@@ -76,6 +91,7 @@ export class UserPage implements OnInit{
         this.dataService.setState(true);
         let index = this.userCityList.findIndex(c => c.name === cityName);
         this.userCityList.splice(index, 1);
+        this.presentToast('Delete successful!')
       }
     });
   }
@@ -102,6 +118,9 @@ export class UserPage implements OnInit{
         if (status === 'OK') {
           this.currentCity = results[0].formatted_address;
           console.log(results[0].address_components);
+        }
+        else {
+          this.presentToast('Error, Try again !!!')
         }
         this.loading.dismissAll();
       })

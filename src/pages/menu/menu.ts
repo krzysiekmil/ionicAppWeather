@@ -29,7 +29,7 @@ export class MenuPage implements OnInit, DoCheck {
   pages: PageInterface[];
 
 
-  constructor(private navParam: NavParams, public navCtrl: NavController, public userService: UserServiceProvider, private dataService: DataService, private tab2Page: Tab2Page, private userPage: UserPage) {
+  constructor(private navParam: NavParams, public navCtrl: NavController, public userService: UserServiceProvider, private dataService: DataService) {
   }
 
   initPageList() {
@@ -40,9 +40,8 @@ export class MenuPage implements OnInit, DoCheck {
         tabComponent: 'UserPage',
         index: 1,
         icon: 'clipboard',
-        component: this.userPage
       },
-      {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct', component: this.tab2Page},
+      {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
       {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
     ];
   }
