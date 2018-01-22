@@ -117,7 +117,6 @@ export class UserPage implements OnInit{
       geocoder.geocode({'location': {lat: this.lat, lng: this.lng}}, (results, status) => {
         if (status === 'OK') {
           this.currentCity = results[0].formatted_address;
-          console.log(results[0].address_components);
         }
         else {
           this.presentToast('Error, Try again !!!')

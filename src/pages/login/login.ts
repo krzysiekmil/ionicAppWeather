@@ -27,6 +27,7 @@ export class LoginPage {
     this.nav.push('RegisterPage');
   }
   test(){
+    firebase.auth
   this.nav.setRoot('MenuPage')
   }
 

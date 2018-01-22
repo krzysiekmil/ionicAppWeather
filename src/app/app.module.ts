@@ -27,8 +27,8 @@ export function authHttpServiceFactory(http: Http) {
     noTokenScheme: true,
     tokenGetter: (() => localStorage.getItem(TOKEN_NAME))
   }), http);
-}
-@NgModule({
+
+  @NgModule({
   declarations: [
     MyApp
 

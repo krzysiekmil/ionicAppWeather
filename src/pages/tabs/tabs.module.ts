@@ -5,11 +5,11 @@ import {UserPage} from "../user/user";
 
 @NgModule({
   declarations: [
+
     TabsPage,
 
   ],
   imports: [
-
     IonicPageModule.forChild(TabsPage),
   ],
   providers: [

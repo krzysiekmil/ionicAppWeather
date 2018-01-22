@@ -35,7 +35,7 @@ export class UserServiceProvider {
 
   logout() {
     this.accessToken = null;
-
+    localStorage.removeItem('numberOfCities');
     localStorage.removeItem(TOKEN_NAME);
     this.admin_role = false;
   }

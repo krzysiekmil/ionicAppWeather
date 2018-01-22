@@ -40,7 +40,7 @@ export class Tab2Page implements OnInit {
   ionViewCanEnter(): boolean {
     if (!this.userService.userName) {
       let allert = this.alertCtrl.create({
-        title: 'Upsss ...',
+        title: '  Upsss ...',
         message: 'Can not find your access token,\' please try again',
 
         buttons: [
@@ -85,12 +85,12 @@ export class Tab2Page implements OnInit {
   presentNotification(title: string, text: string) {
     this.localNotification.requestPermission().then(
       (permission) => {
-        if (permission === 'granted') {
+        if (permission === 'granted' && this.userService.userName != null) {
 
           this.localNotification.create(title, {
             tag: 'message2',
             body: text,
-            icon: 'assets/icon/favicon.ico'
+            icon: 'assets/icon/favicon.ico',
           });
 
         }
@@ -100,9 +100,12 @@ export class Tab2Page implements OnInit {
 
   checkControl() {
     this.dataService.getCityList().subscribe(result => {
-      let data = result.length.toString()
-      if (localStorage.getItem('numberOfCites') != data)
+      let data = result.length.toString();
+      if (localStorage.getItem('numberOfCites') != data) {
         this.presentNotification('WOW', 'NEW CITY AVAILABLE');
+        console.log(data);
+        console.log(localStorage.getItem('numberOfCites'));
+      }
       localStorage.setItem('numberOfCities', data);
     });
   }

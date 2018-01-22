@@ -16,6 +16,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyC_LuJhMAX6U_fYrXXb1utAy9r7TKnAPXU",
+      authDomain: "api-project-515150500055.firebaseapp.com",
+      databaseURL: "https://api-project-515150500055.firebaseio.com",
+      projectId: "api-project-515150500055",
+      storageBucket: "api-project-515150500055.appspot.com",
+      messagingSenderId: "515150500055"
+    };
+    firebase.initializeApp(config);
+  </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGuS9ryEccxqDDoTBXQiF_iHSE-q3t6Aw"></script>
   <script src="cordova.js"></script>
 

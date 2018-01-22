@@ -7,7 +7,6 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch"
 import {User} from "/home/krzysiek/ionicApp/src/pages/model/user";
 import {Role} from "/home/krzysiek/ionicApp/src/pages/model/role";
-import {AuthService} from "../auth-service/auth-service";
 import {AuthenticationService} from "../authentication-service/authentication-service";
 
 @Injectable()
@@ -138,7 +137,6 @@ export class DataService {
     let option = new RequestOptions({headers: header, params: param});
     let body = new User();
     body.username = this.auth.username;
-    console.log(body.username);
     return this.http.post(this.userUrl, body, option).map(status => status.status);
   }
 
