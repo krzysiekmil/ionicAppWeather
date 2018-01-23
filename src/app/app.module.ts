@@ -17,6 +17,7 @@ import {LoginPageModule} from "../pages/login/login.module";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Push} from "@ionic-native/push";
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
+import {MessagingProvider} from '../providers/messaging/messaging';
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -27,8 +28,9 @@ export function authHttpServiceFactory(http: Http) {
     noTokenScheme: true,
     tokenGetter: (() => localStorage.getItem(TOKEN_NAME))
   }), http);
-
+}
   @NgModule({
+
   declarations: [
     MyApp
 
@@ -59,7 +61,10 @@ export function authHttpServiceFactory(http: Http) {
     UserServiceProvider,
     Geolocation,
     Push,
-    PhonegapLocalNotification
+    PhonegapLocalNotification,
+    MessagingProvider,
+
   ]
 })
 export class AppModule {}
+

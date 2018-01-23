@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import{DataService} from "../../providers/data-service/data-service";
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {DataService} from "../../providers/data-service/data-service";
 import {City} from "../model/city";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 
@@ -22,7 +22,7 @@ export class AdminPage implements OnInit{
   public change: boolean = null;
   newCity={name:''};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private dataService: DataService , private userService:UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService: DataService, private userService: UserServiceProvider, private alertCtrl: AlertController) {
     this.city = new City();
   }
 
@@ -31,6 +31,37 @@ export class AdminPage implements OnInit{
   }
   ionViewCanEnter():boolean{
     return this.userService.isAdmin();
+  }
+
+  sendNotification() {
+    let alert = this.alertCtrl.create({
+      title: 'Send Notification',
+      message: 'Cos tam bedzie napisane ',
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'title'
+        },
+        {
+          name: 'message',
+          placeholder: 'message'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log(data.message + data.title);
+          }
+
+        }
+      ]
+    });
+    alert.present();
+
   }
 
 

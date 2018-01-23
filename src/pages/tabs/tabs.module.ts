@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {IonicPageModule, NavController} from 'ionic-angular';
 import {TabsPage} from './tabs';
 import {UserPage} from "../user/user";
+import {UserPageModule} from "../user/user.module";
 
 @NgModule({
   declarations: [
@@ -10,11 +11,15 @@ import {UserPage} from "../user/user";
 
   ],
   imports: [
+    UserPageModule,
     IonicPageModule.forChild(TabsPage),
   ],
   providers: [
-    UserPage,
-    NavController
+    UserPageModule,
+    NavController,
+    UserPage
+
+
   ]
 })
 export class TabsPageModule {}

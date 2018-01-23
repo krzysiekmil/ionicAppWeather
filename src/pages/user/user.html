@@ -17,13 +17,11 @@
   <ion-list>
   <h1>Select city for you</h1>
     <ion-row>
-      <ion-col>
         <ion-item *ngIf="lat!=null&&lng!=null&&currentCity!=null"> Your localisation is {{currentCity}}</ion-item>
         <ion-item *ngIf="lat==null||lng==null||currentCity==null"> Check your localisation</ion-item>
-      </ion-col>
       <ion-col>
-        <button *ngIf="lat!=null&&lng!=null" ion-button round (click)="restart()">Restart</button>
-        <button *ngIf="lat==null||lng==null" ion-button round (click)="myLocation()">Locate me</button>
+        <button *ngIf="lat!=null&&lng!=null" ion-button round full (click)="restart()">Restart</button>
+        <button *ngIf="lat==null||lng==null" ion-button round full (click)="myLocation()">Locate me</button>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let city of cityList">

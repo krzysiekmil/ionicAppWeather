@@ -3,6 +3,8 @@
   "short_name": "Ionic",
   "start_url": "index.html",
   "display": "standalone",
+  "gcm_sender_id": "515150500055",
+  "messagingSenderId": "515150500055",
   "icons": [{
     "src": "assets/imgs/logo.png",
     "sizes": "512x512",

@@ -27,13 +27,17 @@ export class Tab2Page implements OnInit {
   userName: string;
 
 
-  constructor(private app: App, public dataService: DataService, public navCtrl: NavController, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private push: Push, private localNotification: PhonegapLocalNotification, private userService: UserServiceProvider) {
-    if (!this.userService.userName) {
-      this.presentNotification('WOW', 'please try to login again ');
-    }
-    else {
-      this.presentNotification('Welcome ', this.userService.userName);
-    }
+  constructor(private app: App, public dataService: DataService, public navCtrl: NavController,
+              private loadingCtrl: LoadingController, private alertCtrl: AlertController,
+              private push: Push, private localNotification: PhonegapLocalNotification,
+              private userService: UserServiceProvider) {
+    // if (!this.userService.userName) {
+    //   this.presentNotification('WOW', 'please try to login again ');
+    // }
+    // else {
+    //   this.presentNotification('Welcome ', this.userService.userName);
+    // }
+
 
   }
 
@@ -103,8 +107,6 @@ export class Tab2Page implements OnInit {
       let data = result.length.toString();
       if (localStorage.getItem('numberOfCites') != data) {
         this.presentNotification('WOW', 'NEW CITY AVAILABLE');
-        console.log(data);
-        console.log(localStorage.getItem('numberOfCites'));
       }
       localStorage.setItem('numberOfCities', data);
     });

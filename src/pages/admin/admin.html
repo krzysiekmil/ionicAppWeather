@@ -22,7 +22,12 @@
       </ion-item>
   </ion-row>
     <ion-row class ="singup-col">
-    <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" >Add City</button>
+      <button ion-button class="submit-btn" color="secondary" full type="submit" [disabled]="!registerForm.form.valid">
+        Add City
+      </button>
+    </ion-row>
+    <ion-row>
+      <button ion-button full round (click)="sendNotification()">Send Notification to all users</button>
     </ion-row>
   </form>
   </div>
