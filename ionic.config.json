@@ -10,5 +10,8 @@
       "path": "/oauth",
       "proxyUrl": "http://localhost:8080/oauth"
     }
+  ],
+  "scripts": [
+    "src/firebase-messaging-sw.js"
   ]
 }

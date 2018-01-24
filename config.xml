@@ -89,7 +89,11 @@
   <plugin name="phonegap-plugin-push" spec="^2.1.2">
     <variable name="FCM_VERSION" value="11.0.1"/>
   </plugin>
-  <engine name="browser" spec="~5.0.3"/>
   <plugin name="phonegap-plugin-local-notification" spec="^1.0.1"/>
-  <engine name="android" spec="~7.0.0"/>
+  <plugin name="cordova-plugin-fcm" spec="^2.1.2"/>
+  <plugin name="cordova-plugin-googlemaps" spec="^2.1.1">
+    <variable name="API_KEY_FOR_ANDROID" value="AIzaSyCQgtypUH4DCUEe302S-72N0MP1hat_ALc"/>
+  </plugin>
+  <engine name="browser" spec="5.0.3"/>
+  <engine name="android" spec="7.0.0"/>
 </widget>

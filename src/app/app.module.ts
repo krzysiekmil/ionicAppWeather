@@ -17,7 +17,20 @@ import {LoginPageModule} from "../pages/login/login.module";
 import {Geolocation} from "@ionic-native/geolocation";
 import {Push} from "@ionic-native/push";
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AngularFireModule} from "angularfire2";
 import {MessagingProvider} from '../providers/messaging/messaging';
+import {AngularFireAuthModule} from "angularfire2/auth";
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC_LuJhMAX6U_fYrXXb1utAy9r7TKnAPXU",
+  authDomain: "api-project-515150500055.firebaseapp.com",
+  databaseURL: "https://api-project-515150500055.firebaseio.com",
+  projectId: "api-project-515150500055",
+  storageBucket: "api-project-515150500055.appspot.com",
+  messagingSenderId: "515150500055"
+};
+
 
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
@@ -30,24 +43,24 @@ export function authHttpServiceFactory(http: Http) {
   }), http);
 }
   @NgModule({
-
   declarations: [
     MyApp
 
   ],
   imports: [
+
     LoginPageModule,
     HttpModule,
     BrowserModule,
     ChartsModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireAuthModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-
-
-
+    MyApp
   ],
   providers: [
     AuthService,
@@ -63,6 +76,7 @@ export function authHttpServiceFactory(http: Http) {
     Push,
     PhonegapLocalNotification,
     MessagingProvider,
+
 
   ]
 })

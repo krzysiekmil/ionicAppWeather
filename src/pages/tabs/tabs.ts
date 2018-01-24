@@ -18,7 +18,7 @@ export class TabsPage {
   userRoot: any = 'UserPage';
   myIndex: number;
 
-  constructor(navParams: NavParams, public userService: UserServiceProvider, private alertCtrl: AlertController, public navCtrl: NavController, public test: UserPage, private app: App) {
+  constructor(navParams: NavParams, public userService: UserServiceProvider, private alertCtrl: AlertController, public navCtrl: NavController, private app: App) {
     this.myIndex = navParams.data.tabIndex || 2;
   }
 

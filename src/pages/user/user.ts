@@ -24,7 +24,10 @@ export class UserPage implements OnInit{
   currentCity: any;
 
 
-  constructor(public toastCtrl: ToastController, public dataService: DataService, public userService: UserServiceProvider, public nav: NavController, private geolocation: Geolocation, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+  constructor(public toastCtrl: ToastController, public dataService: DataService,
+              public userService: UserServiceProvider, public nav: NavController,
+              private geolocation: Geolocation, private loadingCtrl: LoadingController,
+              private alertCtrl: AlertController) {
   }
 
   ionViewCanEnter():boolean{

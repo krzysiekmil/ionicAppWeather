@@ -4,6 +4,7 @@ import {Push} from '@ionic-native/push';
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {DataService} from "../../providers/data-service/data-service";
+import {MessagingProvider} from "../../providers/messaging/messaging";
 
 
 declare var google;
@@ -30,15 +31,9 @@ export class Tab2Page implements OnInit {
   constructor(private app: App, public dataService: DataService, public navCtrl: NavController,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private push: Push, private localNotification: PhonegapLocalNotification,
-              private userService: UserServiceProvider) {
-    // if (!this.userService.userName) {
-    //   this.presentNotification('WOW', 'please try to login again ');
-    // }
-    // else {
-    //   this.presentNotification('Welcome ', this.userService.userName);
-    // }
+              private userService: UserServiceProvider, private messagingService: MessagingProvider) {
 
-
+    this.messagingService.getPermision();
   }
 
   ionViewCanEnter(): boolean {
