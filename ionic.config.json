@@ -8,10 +8,16 @@
   "proxies": [
     {
       "path": "/oauth",
-      "proxyUrl": "http://localhost:8080/oauth"
+      "proxyUrl": "http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/oauth"
+    },
+    {
+      "path": "localhost:8080/*",
+      "proxyUrl": "http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/*"
     }
   ],
   "scripts": [
-    "src/firebase-messaging-sw.js"
+    {
+      "firebase-messaging-sw": "src/firebase-messaging-sw.js"
+    }
   ]
 }
