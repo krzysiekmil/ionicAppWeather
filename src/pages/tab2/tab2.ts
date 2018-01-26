@@ -33,8 +33,6 @@ export class Tab2Page implements OnInit {
               private push: Push, private localNotification: PhonegapLocalNotification,
               private userService: UserServiceProvider, private messagingService: MessagingProvider) {
 
-    this.messagingService.getPermision();
-    this.messagingService.addItem();
   }
 
   ionViewCanEnter(): boolean {

@@ -17,7 +17,7 @@ export class AuthenticationService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD))
     let options = new RequestOptions({headers:headers});
-    return this.http.post(AuthenticationService.AUTH_TOKEN, body,options)
+    return this.http.post('http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/oauth/token', body, options)
       .map(res => res.json())
       .map((res: any) => {
         if (res.access_token) {

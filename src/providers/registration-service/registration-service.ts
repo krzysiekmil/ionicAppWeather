@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {User} from "../../pages/model/user";
-import {AngularFireAuth} from "angularfire2/auth";
 
 /*
   Generated class for the RegistrationServiceProvider provider.
@@ -13,9 +12,9 @@ import {AngularFireAuth} from "angularfire2/auth";
 @Injectable()
 export class RegistrationServiceProvider {
 
-  addUrl: string = 'http://localhost:8080/user';
+  addUrl: string = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/user';
 
-  constructor(private http: Http, private afAuth: AngularFireAuth) {
+  constructor(private http: Http) {
   }
 
   private extractData(res: Response) {
@@ -33,7 +32,6 @@ export class RegistrationServiceProvider {
     let body = new User();
     body.username = username;
     body.password = password;
-    this.afAuth.auth.createUserWithEmailAndPassword("s@op.com", "asdasd");
     return this.http.post(this.addUrl, body, options).map(res => res.status).catch(this.handleError);
   }
 }

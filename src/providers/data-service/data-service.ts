@@ -11,13 +11,13 @@ import {AuthenticationService} from "../authentication-service/authentication-se
 
 @Injectable()
 export class DataService {
-  public cityUrl = 'http://localhost:8080/city';
-  public cityData = 'http://localhost:8080/cityData';
-  public currentCityData = 'http://localhost:8080/cityDatat/';
-  public addCityURL = 'http://localhost:8080/city';
-  public deleteCityURL = 'http://localhost:8080/city';
-  public getCityListURL = 'http://localhost:8080/city';
-  public userUrl = 'http://localhost:8080/user';
+  public cityUrl = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/city';
+  public cityData = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/cityData';
+  public currentCityData = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/cityDatat/';
+  public addCityURL = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/city';
+  public deleteCityURL = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/city';
+  public getCityListURL = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/city';
+  public userUrl = 'http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/user';
   public state: boolean;
   public _code: any;
   public cityList: City[] = [];
