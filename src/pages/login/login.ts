@@ -15,6 +15,7 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = {name: '', password: '' };
   result:any;
+  RegisterPage = 'RegisterPage';
 
   constructor(private nav: NavController, private auth: AuthService,
               private alertCtrl: AlertController, private loadingCtrl: LoadingController,
@@ -22,14 +23,6 @@ export class LoginPage {
               private userService: UserServiceProvider) {
     this.logout();
   }
-
-  public createAccount() {
-    this.nav.push('RegisterPage');
-  }
-  test(){
-  this.nav.setRoot('MenuPage')
-  }
-
 
   login() {
     this.showLoading();
@@ -44,7 +37,6 @@ export class LoginPage {
           }
           else
           {
-
             this.showError("Access Denied s")
           }
         },

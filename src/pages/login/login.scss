@@ -4,8 +4,11 @@ page-login {
     background: #fff;
 
     .logo-row {
-      padding-top: 0px;
+      align-items: center;
+      text-align: center;
+      padding-top: 25%;
       padding-bottom: 20px;
+      height: 20%;
     }
 
     .login-box {
@@ -34,10 +37,6 @@ page-login {
       padding-bottom: 20px;
     }
 
-    //.item-inner {
-    //  border-bottom-color: #ffffff !important;
-    //  box-shadow: none !important;
-    //}
 
     .submit-btn {
       background: #6178ff;

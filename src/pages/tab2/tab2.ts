@@ -1,5 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AlertController, App, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
+import {
+  AlertController,
+  App,
+  IonicPage,
+  Loading,
+  LoadingController,
+  NavController,
+  ToastController
+} from 'ionic-angular';
 import {Push} from '@ionic-native/push';
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
@@ -31,8 +39,9 @@ export class Tab2Page implements OnInit {
   constructor(private app: App, public dataService: DataService, public navCtrl: NavController,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private push: Push, private localNotification: PhonegapLocalNotification,
-              private userService: UserServiceProvider, private messagingService: MessagingProvider) {
-
+              private userService: UserServiceProvider, private messagingService: MessagingProvider,
+              private toastCtrl: ToastController) {
+    this.presentToast("Welcome back " + this.userService.userName + "!!!")
   }
 
   ionViewCanEnter(): boolean {
@@ -63,6 +72,16 @@ export class Tab2Page implements OnInit {
     this.app.getRootNav().setRoot('LoginPage');
   }
 
+  presentToast(text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 2500,
+      position: 'top',
+
+    });
+    toast.present();
+  }
+
   ngOnInit() {
     this.showLoading();
     this.geocoder = new google.maps.Geocoder();
@@ -77,7 +96,6 @@ export class Tab2Page implements OnInit {
       }
       this.loading.dismissAll();
     })
-    this.checkControl();
   }
 
   presentNotification(title: string, text: string) {
@@ -88,22 +106,11 @@ export class Tab2Page implements OnInit {
           this.localNotification.create(title, {
             tag: 'message2',
             body: text,
-            icon: 'assets/icon/favicon.ico',
           });
 
         }
       })
       .catch(error => console.log("Error : " + error));
-  }
-
-  checkControl() {
-    this.dataService.getCityList().subscribe(result => {
-      let data = result.length.toString();
-      if (localStorage.getItem('numberOfCites') != data) {
-        this.presentNotification('WOW', 'NEW CITY AVAILABLE');
-      }
-      localStorage.setItem('numberOfCities', data);
-    });
   }
 
 

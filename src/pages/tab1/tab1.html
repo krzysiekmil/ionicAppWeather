@@ -3,7 +3,7 @@
     <ion-buttons>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
-        <ion-title>{{test}}</ion-title>
+        <ion-title>{{placeAdress}}</ion-title>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -25,9 +25,8 @@
   <div class="row">
     <div class="col-md-6">
       <div style="display: block">
-        <canvas id="chart" baseChart
-                height="360"
-                width="1400"
+        <canvas baseChart
+                width=""
                 [data]="lineChartData"
                 [labels]="lineChartLabels"
                 [options]="lineChartOptions"

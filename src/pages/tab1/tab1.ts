@@ -43,8 +43,13 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   public tempLast: any;
   public timeLast: any;
   public status: number;
+  public test: number = 250;
   public lineChartOptions: any = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false,
+    showLine: true,
+
+
   };
   public lineChartColors: Array<any> = [
     { // grey
@@ -77,7 +82,7 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   public width: number;
   public height: number;
   public lineChartType = 'line';
-  public test: string;
+  public placeAdress: string;
 
   public constructor(private dataService: DataService, private loadingCtrl: LoadingController, public navParams: NavParams, public navCtrl: NavController, private alertCtrl: AlertController) {
   }
@@ -87,10 +92,10 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.test = this.navParams.data.tabParam;
+    this.placeAdress = this.navParams.data.tabParam;
     this.showLoading();
     this.geocoder = new google.maps.Geocoder();
-    this.geocoder.geocode({'address': this.test}, (results, status) => {
+    this.geocoder.geocode({'address': this.placeAdress}, (results, status) => {
       if (status === 'OK') {
         this.lng = results[0].geometry.location.lng();
         this.lat = results[0].geometry.location.lat();
@@ -99,7 +104,7 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
       else {
         this.showError("CHYBA SIE DUPLO");
       }
-      this.getCityData(this.test);
+      this.getCityData(this.placeAdress);
     })
   }
 
@@ -179,7 +184,7 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
     this.showLoading();
     this.dataService.refreshData().subscribe(successCode => {
       if (successCode === 200) {
-        this.getCityData(this.test);
+        this.getCityData(this.placeAdress);
       }
       this.loading.dismissAll();
     });

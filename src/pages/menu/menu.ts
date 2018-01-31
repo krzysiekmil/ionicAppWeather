@@ -15,6 +15,7 @@ export interface PageInterface {
   icon: string;
   param?: string;
   component?: any;
+  disabled: boolean;
 }
 
 @IonicPage()
@@ -40,9 +41,10 @@ export class MenuPage implements OnInit, DoCheck {
         tabComponent: 'UserPage',
         index: 1,
         icon: 'clipboard',
+        disabled: false
       },
-      {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct'},
-      {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny'},
+      {title: 'Settings', pageName: 'TabsPage', tabComponent: 'Tab2Page', icon: 'construct', disabled: false},
+      {title: 'Charts', pageName: 'TabsPage', tabComponent: 'Tab1Page', index: 0, icon: 'partly-sunny', disabled: true},
     ];
   }
 
@@ -69,6 +71,7 @@ export class MenuPage implements OnInit, DoCheck {
           tabComponent: 'Tab1Page',
           icon: null,
           param: city.name,
+          disabled: false
         })
       });
     });
