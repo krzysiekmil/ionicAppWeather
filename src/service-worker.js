@@ -20,7 +20,7 @@ self.toolbox.precache(
     './build/polyfills.js',
     'index.html',
     'manifest.json',
-    'firebase-messaging-sw.js'
+    'assets/firebase-messaging-sw.js'
 
   ]
 );

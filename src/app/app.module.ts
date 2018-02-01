@@ -19,15 +19,18 @@ import {Push} from "@ionic-native/push";
 import {PhonegapLocalNotification} from "@ionic-native/phonegap-local-notification";
 import {MessagingProvider} from '../providers/messaging/messaging';
 import {RegisterPageModule} from "../pages/register/register.module";
+import {AngularFireModule} from "angularfire2";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AngularFireAuthModule} from "angularfire2/auth";
 
-// const FIREBASE_CONFIG = {
-//   apiKey: "AIzaSyC_LuJhMAX6U_fYrXXb1utAy9r7TKnAPXU",
-//   authDomain: "api-project-515150500055.firebaseapp.com",
-//   databaseURL: "https://api-project-515150500055.firebaseio.com",
-//   projectId: "api-project-515150500055",
-//   storageBucket: "api-project-515150500055.appspot.com",
-//   messagingSenderId: "515150500055"
-// };
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC_LuJhMAX6U_fYrXXb1utAy9r7TKnAPXU",
+  authDomain: "api-project-515150500055.firebaseapp.com",
+  databaseURL: "https://api-project-515150500055.firebaseio.com",
+  projectId: "api-project-515150500055",
+  storageBucket: "api-project-515150500055.appspot.com",
+  messagingSenderId: "515150500055"
+};
 
 
 export function authHttpServiceFactory(http: Http) {
@@ -51,9 +54,9 @@ export function authHttpServiceFactory(http: Http) {
     HttpModule,
     BrowserModule,
     ChartsModule,
-    // AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    // AngularFireDatabaseModule,
-    // AngularFireAuthModule,
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     IonicModule.forRoot(MyApp),
     RegisterPageModule,
   ],

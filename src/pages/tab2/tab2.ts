@@ -40,8 +40,11 @@ export class Tab2Page implements OnInit {
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private push: Push, private localNotification: PhonegapLocalNotification,
               private userService: UserServiceProvider, private messagingService: MessagingProvider,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,) {
     this.presentToast("Welcome back " + this.userService.userName + "!!!")
+    this.messagingService.getPermission();
+    this.messagingService.receiveMessage();
+
   }
 
   ionViewCanEnter(): boolean {

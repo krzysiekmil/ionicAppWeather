@@ -5,10 +5,17 @@
   "integrations": {
     "cordova": {}
   },
+  "assets": [
+    "firebase-messaging-sw.js"
+  ],
   "proxies": [
     {
       "path": "/oauth",
       "proxyUrl": "http://default-environment.pbsfzikagw.eu-central-1.elasticbeanstalk.com/oauth"
+    },
+    {
+      "path": "/",
+      "proxyUrl": "http://localhost:8100/assets"
     }
   ]
 }

@@ -28,7 +28,7 @@
     "@firebase/messaging": "^0.1.8",
     "@firebase/storage": "^0.1.6",
     "@ionic-native/core": "^4.5.2",
-    "@ionic-native/fcm": "^4.5.2",
+    "@ionic-native/fcm": "^4.5.3",
     "@ionic-native/geolocation": "^4.5.2",
     "@ionic-native/google-maps": "^4.5.2",
     "@ionic-native/phonegap-local-notification": "^4.5.2",
@@ -52,6 +52,7 @@
     "cordova-plugin-calendar": "^4.6.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -113,7 +114,8 @@
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1"
       },
-      "phonegap-plugin-local-notification": {}
+      "phonegap-plugin-local-notification": {},
+      "cordova-plugin-fcm": {}
     },
     "platforms": [
       "browser",
