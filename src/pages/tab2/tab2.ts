@@ -45,6 +45,7 @@ export class Tab2Page implements OnInit {
     this.messagingService.getPermission();
     this.messagingService.receiveMessage();
 
+
   }
 
   ionViewCanEnter(): boolean {

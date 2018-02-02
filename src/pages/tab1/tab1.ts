@@ -161,10 +161,10 @@ export class Tab1Page implements DoCheck, OnInit, OnDestroy {
         this.currentCityData = data;
         this.currentCityData.forEach(cd => {
           this.lineChartData.push(cd.temp);
-          this.lineChartLabels.push(cd.time);
+          this.lineChartLabels.push(cd.time.slice(11, 19));
         });
         this.tempLast = this.currentCityData.find(d => d.id > 0).temp;
-        this.timeLast = this.currentCityData.find(d => d.id > 0).time;
+        this.timeLast = this.currentCityData.find(d => d.id > 0).time.slice(11, 19);
         this.lineChartData.reverse();
         this.lineChartLabels.reverse();
         this.lineChartLabels = this.lineChartLabels.slice();

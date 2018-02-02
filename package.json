@@ -52,7 +52,6 @@
     "cordova-plugin-calendar": "^4.6.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
-    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.1.0",
@@ -114,8 +113,7 @@
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1"
       },
-      "phonegap-plugin-local-notification": {},
-      "cordova-plugin-fcm": {}
+      "phonegap-plugin-local-notification": {}
     },
     "platforms": [
       "browser",
