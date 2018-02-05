@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {DataService} from "../../providers/data-service/data-service";
 import {City} from "../model/city";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {MessagingProvider} from "../../providers/messaging/messaging";
 
 /**
  * Generated class for the AdminPage page.
@@ -22,7 +23,7 @@ export class AdminPage implements OnInit{
   public change: boolean = null;
   newCity={name:''};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService: DataService, private userService: UserServiceProvider, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService: DataService, private userService: UserServiceProvider, private alertCtrl: AlertController,private messagingSesrvice:MessagingProvider,private toastCtrl:ToastController) {
     this.city = new City();
   }
 
@@ -32,6 +33,15 @@ export class AdminPage implements OnInit{
   ionViewCanEnter():boolean{
     return this.userService.isAdmin();
   }
+  presentToast(text: string) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 1800,
+      position: 'top',
+
+    });
+    toast.present();
+  }
 
   sendNotification() {
     let alert = this.alertCtrl.create({
@@ -39,12 +49,8 @@ export class AdminPage implements OnInit{
       message: 'Cos tam bedzie napisane ',
       inputs: [
         {
-          name: 'title',
-          placeholder: 'title'
-        },
-        {
           name: 'message',
-          placeholder: 'message'
+          placeholder: 'Message'
         },
       ],
       buttons: [
@@ -54,7 +60,11 @@ export class AdminPage implements OnInit{
         {
           text: 'Send',
           handler: data => {
-            console.log(data.message + data.title);
+            this.messagingSesrvice.sendNotification(data.message).subscribe(result=>{
+              if(result!==200) {
+                this.presentToast('Upss...');
+              }
+            })
           }
 
         }

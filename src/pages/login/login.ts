@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {AlertController, IonicPage, Loading, LoadingController, NavController} from 'ionic-angular';
-import {AuthService} from '/home/krzysiek/ionicApp/src/providers/auth-service/auth-service';
 import {isUndefined} from "util";
 import {AuthenticationService} from "../../providers/authentication-service/authentication-service";
 import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {AuthService} from "../../providers/auth-service/auth-service";
 
 @IonicPage()
 @Component({

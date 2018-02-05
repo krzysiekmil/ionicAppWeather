@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {CityData} from '/home/krzysiek/ionicApp/src/pages/model/cityData';
-import {City} from '/home/krzysiek/ionicApp/src/pages/model/city';
 import {Observable} from "rxjs/Observable";
 import {Headers, Http, RequestOptions, Response, URLSearchParams} from '@angular/http';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch"
-import {User} from "/home/krzysiek/ionicApp/src/pages/model/user";
-import {Role} from "/home/krzysiek/ionicApp/src/pages/model/role";
 import {AuthenticationService} from "../authentication-service/authentication-service";
+import {City} from "../../pages/model/city";
+import {Role} from "../../pages/model/role";
+import {User} from "../../pages/model/user";
+import {CityData} from "../../pages/model/cityData";
 
 @Injectable()
 export class DataService {

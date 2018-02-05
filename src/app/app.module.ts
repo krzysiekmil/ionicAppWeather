@@ -22,6 +22,8 @@ import {RegisterPageModule} from "../pages/register/register.module";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AngularFireAuthModule} from "angularfire2/auth";
+import {OneSignal} from "@ionic-native/onesignal"
+
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyC_LuJhMAX6U_fYrXXb1utAy9r7TKnAPXU",
@@ -78,6 +80,7 @@ export function authHttpServiceFactory(http: Http) {
     Push,
     PhonegapLocalNotification,
     MessagingProvider,
+    OneSignal
 
 
   ]
