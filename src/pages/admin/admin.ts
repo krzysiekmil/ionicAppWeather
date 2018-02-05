@@ -23,7 +23,10 @@ export class AdminPage implements OnInit{
   public change: boolean = null;
   newCity={name:''};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService: DataService, private userService: UserServiceProvider, private alertCtrl: AlertController,private messagingSesrvice:MessagingProvider,private toastCtrl:ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private dataService: DataService, private userService: UserServiceProvider,
+              private alertCtrl: AlertController, private messagingSesrvice: MessagingProvider,
+              private toastCtrl: ToastController) {
     this.city = new City();
   }
 
@@ -46,7 +49,7 @@ export class AdminPage implements OnInit{
   sendNotification() {
     let alert = this.alertCtrl.create({
       title: 'Send Notification',
-      message: 'Cos tam bedzie napisane ',
+      message: 'Prepare notification for all users',
       inputs: [
         {
           name: 'message',
@@ -79,6 +82,7 @@ export class AdminPage implements OnInit{
     this.dataService.getCityList().subscribe(data => this.cityList = data);
 
   }
+
 
   addCity() {
     this.dataService.addCityS(this.newCity.name).subscribe(status => {

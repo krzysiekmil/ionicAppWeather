@@ -22,7 +22,7 @@ import {RegisterPageModule} from "../pages/register/register.module";
 import {AngularFireModule} from "angularfire2";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AngularFireAuthModule} from "angularfire2/auth";
-import {OneSignal} from "@ionic-native/onesignal"
+import {OneSignal} from "@ionic-native/onesignal";
 
 
 const FIREBASE_CONFIG = {
